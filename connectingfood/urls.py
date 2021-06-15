@@ -15,11 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from myapp.views import FarmerViewSet
+from myapp.views import FarmerViewSet, ProductViewSet, CertificateViewSet
 from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r"farmers", FarmerViewSet)
+router.register(r"products", ProductViewSet)
+router.register(r"certificates", CertificateViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
