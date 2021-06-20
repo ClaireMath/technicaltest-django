@@ -15,15 +15,26 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from myapp.views import FarmerViewSet, ProductViewSet, CertificateViewSet
+from myapp.views import FarmerViewSet, ProductViewSet, CertificateViewSet, FarmerPCViewSet
 from rest_framework import routers
 
 router = routers.DefaultRouter()
+# for this url here is the viewset to use
 router.register(r"farmers", FarmerViewSet)
 router.register(r"products", ProductViewSet)
 router.register(r"certificates", CertificateViewSet)
+router.register(r"farmersPC", FarmerPCViewSet)
+# router.register(r"farmers/certificate__type=bio ", FarmerViewSet)
 
 urlpatterns = [
+    # ex: /polls/
+    # path('', views.index, name='index'),
     path('admin/', admin.site.urls),
+    # when on /api, the router takes over
     path('api/', include(router.urls)),
+    # path('/', include(router.urls)),
+    # path('<int:farmer_id>/', views.detail, name='detail'),
+    # path('<int:farmer_id>/products', views.products, name='products'),
+    # path('<int:farmer_id>/certificates', views.certificates, name='certificates'),
+
 ]
