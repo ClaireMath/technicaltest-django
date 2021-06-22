@@ -3,7 +3,7 @@ from rest_framework import serializers
 
 
 class FarmerSerializer(serializers.ModelSerializer):
-    # certif = Certificate.objects.filter(Certificate.farmer == Farmer.id)
+
     class Meta:
         model = Farmer
         fields = ["id", "name_farmer", "siret", "address"]
@@ -11,15 +11,16 @@ class FarmerSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    # farmers = FarmerSerializer(many=True, read_only=True)
+    id = serializers.IntegerField(required=False)
 
     class Meta:
         model = Product
         fields = ["id", "name_product", "unit", "international_codification", "farmers"]
-
+        # read_only_fields = ('farmer',)
 
 class CertificateSerializer(serializers.ModelSerializer):
     # farmer = FarmerSerializer(many=False, read_only=True)
+    id = serializers.IntegerField(required=False)
 
     class Meta:
         model = Certificate
@@ -27,10 +28,30 @@ class CertificateSerializer(serializers.ModelSerializer):
 
 
 class FarmerPCSerializer(serializers.ModelSerializer):
-    certificate = serializers.StringRelatedField(many=True)
-    products = serializers.StringRelatedField(many=True)
+    # products = serializers.StringRelatedField(many=True)
+    # (displayed only the product name, not the whole object)
+    # certificate = serializers.StringRelatedField(many=True)
+    products = ProductSerializer(many=True)
+    certificate = CertificateSerializer(many=True)
 
     class Meta:
         model = Farmer
         # fields = ["id", "name_farmer", "siret", "address"]
         fields = ["id", "name_farmer", "siret", "address", "products", "certificate"]
+
+    def create(self, validated_data):
+        products_data = validated_data.pop('products')
+        farmer = Farmer.objects.create(**validated_data)
+        for product_data in products_data:
+            Product.objects.create(farmer=farmer, **product_data)
+        return farmer
+
+
+class FarmerCertifTypeSerializer(serializers.ModelSerializer):
+    certificate = serializers.StringRelatedField(many=True)
+
+    class Meta:
+        model = Farmer
+        # fields = ["id", "name_farmer", "siret", "address"]
+        fields = ["id", "name_farmer", "siret", "address", "certificate"]
+
