@@ -44,39 +44,3 @@ class FarmerPCViewSet(viewsets.ReadOnlyModelViewSet):
 class FarmerCertifTypeViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Farmer.objects.all()
     serializer_class = FarmerCertifTypeSerializer
-
-
-"""
-# view certif
-def certif(request, certificate_type):
-    queryset = Product.objects.get(type=certificate_type)
-    f = Farmer.objects.all()
-    output = c.farmer_set.add(f)  # Associates Entry e with Blog b.
-    return HttpResponse("aller encore un effort")
-      type = str(certificate_type)
-    farmer = FARMERS[type]
-    b = Blog.objects.get(id=1)
-    e = Entry.objects.get(id=234)
-    b.entry_set.add(e)  # Associates Entry e with Blog b."""
-
-
-""" test = Certificate.objects.filter('certificate_type=certif_type')
-    return HttpResponse(test)"""
-
-"""
-view detail
-def detail(request, farmer_id):
-    return HttpResponse("You're looking at farmer %s." % farmer_id)
-
-
-view products
-def products(request, farmer_id):
-
-    response = "You're looking at the products of farmer %s."
-    return HttpResponse(response % farmer_id)
-
-
-def certificates(request, farmer_id):
-     return HttpResponse("You're looking at the certificates of farmer %s." % farmer_id)
-
-"""

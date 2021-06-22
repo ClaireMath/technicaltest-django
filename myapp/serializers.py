@@ -7,7 +7,6 @@ class FarmerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Farmer
         fields = ["id", "name_farmer", "siret", "address"]
-        # fields = ["id", "name_farmer", "siret", "address", "certif"]
 
 
 class ProductSerializer(serializers.ModelSerializer):
