@@ -16,24 +16,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from myapp.views import FarmerViewSet, ProductViewSet, CertificateViewSet
-from myapp.views import FarmerPCViewSet, FarmerCertifTypeViewSet
+from myapp.views import FarmerPCViewSet
 from rest_framework import routers
 
 
 router = routers.DefaultRouter()
-# for this url here is the viewset to use
+# for this url, here is the viewset to use
 router.register(r"farmers", FarmerViewSet)
 router.register(r"products", ProductViewSet)
 router.register(r"certificates", CertificateViewSet)
 router.register(r"farmersPC", FarmerPCViewSet)
 router.register(r"/farmers?certificate_type=un_type", FarmerViewSet)
-# /<str:certificate_type>/
 
 urlpatterns = [
-    # ex: /polls/
-    # path('', views.index, name='index'),
     path('admin/', admin.site.urls),
     # when on /api, the router takes over
     path('api/', include(router.urls)),
-    # path('test/<certificate_type>', views.certif, name='certif')
 ]

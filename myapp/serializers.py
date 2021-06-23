@@ -37,20 +37,3 @@ class FarmerPCSerializer(serializers.ModelSerializer):
         model = Farmer
         # fields = ["id", "name_farmer", "siret", "address"]
         fields = ["id", "name_farmer", "siret", "address", "products", "certificate"]
-
-    def create(self, validated_data):
-        products_data = validated_data.pop('products')
-        farmer = Farmer.objects.create(**validated_data)
-        for product_data in products_data:
-            Product.objects.create(farmer=farmer, **product_data)
-        return farmer
-
-
-class FarmerCertifTypeSerializer(serializers.ModelSerializer):
-    certificate = serializers.StringRelatedField(many=True)
-
-    class Meta:
-        model = Farmer
-        # fields = ["id", "name_farmer", "siret", "address"]
-        fields = ["id", "name_farmer", "siret", "address", "certificate"]
-
